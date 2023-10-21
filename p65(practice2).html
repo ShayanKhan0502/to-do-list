@@ -1,0 +1,108 @@
+<html>
+<head>
+<script>
+var arr=[];
+function displayArray()
+{
+	tbody=document.getElementById("tbody");
+	tbody.innerHTML="";
+	for(i=0;i<arr.length;i++)
+	{
+		tr=document.createElement("tr");
+		td1=document.createElement("td");
+		td2=document.createElement("td");
+		td3=document.createElement("td");
+		td4=document.createElement("td");
+		td5=document.createElement("td");
+		td1.innerHTML=arr[i].id;
+		td2.innerHTML=arr[i].name;
+		td3.innerHTML=arr[i].age;
+		td4.innerHTML=arr[i].salary;
+		td5.innerHTML="<img src='cross.png' onClick='deleteItem("+arr[i].id+")' style='cursor:pointer;width:20px'>";
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		tr.appendChild(td3);
+		tr.appendChild(td4);
+		tr.appendChild(td5);
+		tbody.appendChild(tr);
+	}
+}
+function deleteItem(id)
+{
+	idx=-1;
+	for(i=0;i<arr.length;i++)
+	{
+		if(arr[i].id==id)
+			idx=i;
+	}
+	arr.splice(idx,1);
+	displayArray();
+}
+function addItem()
+{
+	t1=document.getElementById("t1");
+	t2=document.getElementById("t2");
+	t3=document.getElementById("t3");
+	t4=document.getElementById("t4");
+	obj={id:t1.value,name:t2.value,age:t3.value,salary:t4.value};
+	arr.push(obj);
+	displayArray();
+	t1.value="";
+	t2.value="";
+	t3.value="";
+	t4.value="";
+	t1.focus();
+}
+function sortById()
+{
+	arr.sort((e1,e2)=>e1.id-e2.id);
+	displayArray();
+}
+function sortByName()
+{
+	arr.sort((e1,e2)=>
+	{
+		if(e1.name>e2.name)
+			return 1;
+		else if(e1.name==e2.name)
+			return 0;
+		else
+			return -1;
+	});
+	displayArray();
+}
+function sortByAge()
+{
+	arr.sort((e1,e2)=>e1.age-e2.age);
+	displayArray();
+}
+function sortBySalary()
+{
+	arr.sort((e1,e2)=>e1.salary-e2.salary);
+	displayArray();
+}
+</script>
+</head>
+<body>
+<table>
+	<thead>
+		<tr>
+			<td><a href='#' onClick="sortById()">Id</a></td>
+			<td><a href='#' onClick="sortByName()">Name</a></td>
+			<td><a href='#' onClick="sortByAge()">Age</a></td>
+			<td><a href='#' onClick="sortBySalary()">Salary</a></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><input type="text" id="t1" /></td>
+			<td><input type="text" id="t2" /></td>
+			<td><input type="text" id="t3" /></td>
+			<td><input type="text" id="t4" /></td>
+			<td><input type="button" value="Add" onClick="addItem()" /></td>
+		</tr>
+	</thead>
+	<tbody  id="tbody">
+	</tbody>
+</table>
+</body>
+</html>
